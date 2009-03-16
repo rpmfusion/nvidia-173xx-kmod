@@ -3,12 +3,12 @@
 # "buildforkernels newest" macro for just that build; immediately after
 # queuing that build enable the macro again for subsequent builds; that way
 # a new akmod package will only get build when a new one is actually needed
-%define buildforkernels akmod
+#define buildforkernels akmod
 
 Name:          nvidia-173xx-kmod
-Version:       173.14.17
+Version:       173.14.18
 # Taken over by kmodtool
-Release:       1%{?dist}.1
+Release:       1%{?dist}
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -93,6 +93,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Mar 16 2009 kwizart < kwizart at gmail.com > - 173.14.18-1
+- Update to 173.14.18 (stable)
+
 * Wed Feb 25 2009 kwizart < kwizart at gmail.com > - 173.14.17-1
 - Update to 173.14.17 (beta)
 - Build for i586 again since 173xx doesn't requires sse.
