@@ -6,9 +6,9 @@
 %define buildforkernels newest
 
 Name:          nvidia-173xx-kmod
-Version:       173.14.18
+Version:       173.14.20
 # Taken over by kmodtool
-Release:       2%{?dist}.18
+Release:       1%{?dist}.1
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -93,8 +93,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Tue Sep 01 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 173.14.18-2.18
+* Tue Sep  1 2009 kwizart < kwizart at gmail.com > - 173.14.20-1.1
 - rebuild for new kernels
+
+* Mon Aug 31 2009 kwizart < kwizart at gmail.com > - 173.14.20-1
+- Update to 173.14.20 (beta)
 
 * Thu Aug 27 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 173.14.18-2.17
 - rebuild for new kernels
