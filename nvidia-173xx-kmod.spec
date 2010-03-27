@@ -3,12 +3,12 @@
 # "buildforkernels newest" macro for just that build; immediately after
 # queuing that build enable the macro again for subsequent builds; that way
 # a new akmod package will only get build when a new one is actually needed
-%define buildforkernels newest
+#define buildforkernels newest
 
 Name:          nvidia-173xx-kmod
-Version:       173.14.22
+Version:       173.14.25
 # Taken over by kmodtool
-Release:       1%{?dist}.14
+Release:       1%{?dist}
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -93,6 +93,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Mar 27 2010 Nicolas Chauvet <kwizart@fedoraproject.org> - 173.14.25-1
+- Update to 173.14.25
+
 * Fri Mar 05 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 173.14.22-1.14
 - rebuild for new kernel
 
