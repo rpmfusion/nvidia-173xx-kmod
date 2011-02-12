@@ -8,7 +8,7 @@
 Name:          nvidia-173xx-kmod
 Version:       173.14.27
 # Taken over by kmodtool
-Release:       1%{?dist}.9
+Release:       1%{?dist}.10
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -93,6 +93,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Feb 12 2011 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 173.14.27-1.10
+- rebuild for updated kernel
+
 * Fri Dec 17 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 173.14.27-1.9
 - rebuild for updated kernel
 
