@@ -6,7 +6,7 @@
 #define buildforkernels newest
 
 Name:          nvidia-173xx-kmod
-Version:       173.14.28
+Version:       173.14.30
 # Taken over by kmodtool
 Release:       1%{?dist}
 Summary:       NVIDIA 173xx display driver kernel module
@@ -93,6 +93,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun May 01 2011 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1
+- Update to 173.14.30
+
 * Thu Oct 07 2010 Nicolas Chauvet <kwizart@gmail.com> - 173.14.28-1
 - Update to 173.14.28
 
