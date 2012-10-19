@@ -3,12 +3,12 @@
 # "buildforkernels newest" macro for just that build; immediately after
 # queuing that build enable the macro again for subsequent builds; that way
 # a new akmod package will only get build when a new one is actually needed
-%define buildforkernels newest
+#define buildforkernels newest
 
 Name:          nvidia-173xx-kmod
 Version:       173.14.35
 # Taken over by kmodtool
-Release:       1%{?dist}.13
+Release:       2%{?dist}.4
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -22,6 +22,8 @@ Source0:       http://rpms.kwizart.net/fedora/SOURCES/nvidia-kmod-data-%{version
 #Source0:       http://www.diffingo.com/downloads/livna/kmod-data/nvidia-kmod-data-%{version}.tar.bz2
 # </switch me>
 #http://www.nvnews.net/vbulletin/attachment.php?attachmentid=32570&d=1218222727
+
+Patch0:        3.6_kernel.patch
 
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -46,12 +48,12 @@ kmodtool  --target %{_target_cpu}  --repo rpmfusion --kmodname %{name} %{?buildf
 %setup -q -c -T -a 0
 
 # patch loop
-#for arch in x86 x64
-#do
-#    pushd nvidiapkg-${arch}
-# empty
-#    popd
-#done
+for arch in x86 x64
+do
+    pushd nvidiapkg-${arch}
+%patch0 -p1
+    popd
+done
 
 
 for kernel_version  in %{?kernel_versions} ; do
@@ -93,40 +95,55 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Thu Oct 18 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.13
+* Thu Oct 18 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-2.4
 - Rebuilt for updated kernel
 
-* Wed Oct 17 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.12
+* Thu Oct 11 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-2.3
 - Rebuilt for updated kernel
 
-* Thu Oct 11 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.11
+* Mon Oct 08 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-2.2
 - Rebuilt for updated kernel
 
-* Wed Oct 03 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.10
+* Wed Oct 03 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-2.1
 - Rebuilt for updated kernel
 
-* Mon Sep 17 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.9
+* Mon Oct 01 2012 Leigh Scott <leigh123linux@googlemail.com> - 173.14.35-2
+- patch for 3.6 kernel
+
+* Thu Sep 27 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.13
 - Rebuilt for updated kernel
 
-* Sun Aug 26 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.8
+* Mon Sep 17 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.12
 - Rebuilt for updated kernel
 
-* Thu Aug 16 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.7
+* Fri Aug 31 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.11
 - Rebuilt for updated kernel
 
-* Tue Jul 31 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.6
+* Wed Aug 22 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.10
 - Rebuilt for updated kernel
 
-* Thu Jul 26 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.5
+* Thu Aug 16 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.9
 - Rebuilt for updated kernel
 
-* Tue Jul 17 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.4
+* Sat Aug 11 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.8
 - Rebuilt for updated kernel
 
-* Fri Jul 06 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.3
+* Tue Jul 31 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.7
 - Rebuilt for updated kernel
 
-* Thu Jun 28 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.2
+* Sat Jul 21 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.6
+- Rebuilt for updated kernel
+
+* Tue Jul 17 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.5
+- Rebuilt for updated kernel
+
+* Fri Jul 06 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.4
+- Rebuilt for updated kernel
+
+* Thu Jun 28 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.3
+- Rebuilt for updated kernel
+
+* Thu Jun 21 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.2
 - Rebuilt for updated kernel
 
 * Sun Jun 17 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-1.1
@@ -135,29 +152,41 @@ rm -rf $RPM_BUILD_ROOT
 * Tue Jun 05 2012 leigh scott <leigh123linux@googlemail.com> - 173.14.35-1
 - Update to 173.14.35
 
-* Tue Jun 05 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.34-1.2
+* Tue Jun 05 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.34-1.3
 - Rebuilt for updated kernel
 
-* Wed May 23 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.34-1.1
+* Sun May 27 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.34-1.2
 - Rebuilt for updated kernel
+
+* Sat May 26 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.34-1.1
+- Rebuilt for release kernel
 
 * Sat May 19 2012 leigh scott <leigh123linux@googlemail.com> - 173.14.34-1
 - Update to 173.14.34
 
-* Sat Dec 10 2011 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.7
+* Sat Apr 28 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.10
 - rebuild for updated kernel
 
-* Thu Dec 01 2011 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.6
+* Sun Apr 22 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.9
 - rebuild for updated kernel
 
-* Wed Nov 23 2011 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.5
+* Mon Apr 16 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.8
 - rebuild for updated kernel
 
-* Wed Nov 16 2011 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.4
-- rebuild for updated kernel
+* Thu Apr 12 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.7
+- rebuild for beta kernel
 
-* Mon Nov 14 2011 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.3
-- rebuild for updated kernel
+* Tue Feb 07 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.6
+- Rebuild for UsrMove
+
+* Wed Nov 02 2011 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.5
+- Rebuild for F-16 kernel
+
+* Tue Nov 01 2011 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.4
+- Rebuild for F-16 kernel
+
+* Fri Oct 28 2011 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.3
+- Rebuild for F-16 kernel
 
 * Sun Oct 23 2011 Nicolas Chauvet <kwizart@gmail.com> - 173.14.30-1.2
 - Rebuild for F-16 kernel
