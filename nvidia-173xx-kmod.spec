@@ -8,7 +8,7 @@
 Name:          nvidia-173xx-kmod
 Version:       173.14.36
 # Taken over by kmodtool
-Release:       1%{?dist}.4
+Release:       2%{?dist}
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -22,6 +22,7 @@ Source0:       http://rpms.kwizart.net/fedora/SOURCES/nvidia-kmod-data-%{version
 #Source0:       http://www.diffingo.com/downloads/livna/kmod-data/nvidia-kmod-data-%{version}.tar.bz2
 # </switch me>
 #http://www.nvnews.net/vbulletin/attachment.php?attachmentid=32570&d=1218222727
+Patch0:        3.7_kernel.patch
 
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -49,7 +50,7 @@ kmodtool  --target %{_target_cpu}  --repo rpmfusion --kmodname %{name} %{?buildf
 for arch in x86 x64
 do
     pushd nvidiapkg-${arch}
-echo "no patch to apply"
+%patch0 -p1
     popd
 done
 
@@ -93,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jan 08 2013 Leigh Scott <leigh123linux@googlemail.com> - 173.14.36-2
+- patched and rebuilt for 3.7 kernel
+
 * Thu Jan 03 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-1.4
 - Rebuilt for f18 final kernel
 
