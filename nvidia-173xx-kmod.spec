@@ -3,12 +3,12 @@
 # "buildforkernels newest" macro for just that build; immediately after
 # queuing that build enable the macro again for subsequent builds; that way
 # a new akmod package will only get build when a new one is actually needed
-%define buildforkernels newest
+%define buildforkernels current
 
 Name:          nvidia-173xx-kmod
 Version:       173.14.36
 # Taken over by kmodtool
-Release:       2%{?dist}.6
+Release:       3%{?dist}
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -23,6 +23,7 @@ Source0:       http://rpms.kwizart.net/fedora/SOURCES/nvidia-kmod-data-%{version
 # </switch me>
 #http://www.nvnews.net/vbulletin/attachment.php?attachmentid=32570&d=1218222727
 Patch0:        3.7_kernel.patch
+Patch1:        conftest.patch
 
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -51,6 +52,7 @@ for arch in x86 x64
 do
     pushd nvidiapkg-${arch}
 %patch0 -p1
+%patch1 -p1
     popd
 done
 
@@ -94,6 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb 05 2013 Leigh Scott <leigh123linux@googlemail.com> - 173.14.36-3
+- patch for 3.7.6 kernel compile issue
+
 * Tue Feb 05 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-2.6
 - Rebuilt for kernel
 
