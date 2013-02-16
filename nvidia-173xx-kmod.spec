@@ -52,7 +52,9 @@ for arch in x86 x64
 do
     pushd nvidiapkg-${arch}
 %patch0 -p1
-%patch1 -p1
+        pushd usr/src/nv
+%patch1 -p2
+        popd
     popd
 done
 
