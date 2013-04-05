@@ -3,10 +3,10 @@
 # "buildforkernels newest" macro for just that build; immediately after
 # queuing that build enable the macro again for subsequent builds; that way
 # a new akmod package will only get build when a new one is actually needed
-%define buildforkernels current
+%global buildforkernels current
 
 Name:          nvidia-173xx-kmod
-Version:       173.14.36
+Version:       173.14.37
 # Taken over by kmodtool
 Release:       1%{?dist}
 Summary:       NVIDIA 173xx display driver kernel module
@@ -17,13 +17,7 @@ URL:           http://www.nvidia.com/
 # http://us.download.nvidia.com/XFree86/Linux-x86/%{version}/NVIDIA-Linux-x86-%{version}-pkg0.run
 # http://us.download.nvidia.com/XFree86/Linux-x86_64/%{version}/NVIDIA-Linux-x86_64-%{version}-pkg0.run
 
-# <switch me> when sources are on kwizart's repo
-Source0:       http://rpms.kwizart.net/fedora/SOURCES/nvidia-kmod-data-%{version}.tar.bz2
-#Source0:       http://www.diffingo.com/downloads/livna/kmod-data/nvidia-kmod-data-%{version}.tar.bz2
-# </switch me>
-#http://www.nvnews.net/vbulletin/attachment.php?attachmentid=32570&d=1218222727
-
-Patch0:        3.7_kernel.patch
+Source0:       nvidia-kmod-data-%{version}.tar.bz2
 
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -51,7 +45,7 @@ kmodtool  --target %{_target_cpu}  --repo rpmfusion --kmodname %{name} %{?buildf
 for arch in x86 x64
 do
     pushd nvidiapkg-${arch}
-%patch0 -p1
+echo "Nothing to patch"
     popd
 done
 
@@ -95,6 +89,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Apr 05 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1
+- Update to 173.14.37
+
 * Fri Nov 16 2012 Leigh Scott <leigh123linux@googlemail.com> - 173.14.36-1
 - Update to 173.14.36
 - Adds support for xserver ABI 13 (xorg-server 1.13)
