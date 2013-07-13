@@ -8,7 +8,7 @@
 Name:          nvidia-173xx-kmod
 Version:       173.14.37
 # Taken over by kmodtool
-Release:       1%{?dist}.7
+Release:       1%{?dist}.8
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -89,6 +89,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Jul 13 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.8
+- Rebuilt for kernel
+
 * Sat Jul 06 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.7
 - Rebuilt for kernel
 
