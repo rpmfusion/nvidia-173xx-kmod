@@ -3,12 +3,12 @@
 # "buildforkernels newest" macro for just that build; immediately after
 # queuing that build enable the macro again for subsequent builds; that way
 # a new akmod package will only get build when a new one is actually needed
-%global buildforkernels newest
+#global buildforkernels newest
 
 Name:          nvidia-173xx-kmod
-Version:       173.14.36
+Version:       173.14.37
 # Taken over by kmodtool
-Release:       5%{?dist}.20
+Release:       1%{?dist}.8
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -17,13 +17,7 @@ URL:           http://www.nvidia.com/
 # http://us.download.nvidia.com/XFree86/Linux-x86/%{version}/NVIDIA-Linux-x86-%{version}-pkg0.run
 # http://us.download.nvidia.com/XFree86/Linux-x86_64/%{version}/NVIDIA-Linux-x86_64-%{version}-pkg0.run
 
-# <switch me> when sources are on kwizart's repo
-Source0:       http://rpms.kwizart.net/fedora/SOURCES/nvidia-kmod-data-%{version}.tar.bz2
-#Source0:       http://www.diffingo.com/downloads/livna/kmod-data/nvidia-kmod-data-%{version}.tar.bz2
-# </switch me>
-#http://www.nvnews.net/vbulletin/attachment.php?attachmentid=32570&d=1218222727
-Patch0:        3.7_kernel.patch
-Patch1:        conftest.patch
+Source0:       nvidia-kmod-data-%{version}.tar.bz2
 
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -51,10 +45,7 @@ kmodtool  --target %{_target_cpu}  --repo rpmfusion --kmodname %{name} %{?buildf
 for arch in x86 x64
 do
     pushd nvidiapkg-${arch}
-%patch0 -p1
-        pushd usr/src/nv
-%patch1 -p2
-        popd
+echo "Nothing to patch"
     popd
 done
 
@@ -98,129 +89,37 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Mon Jul 15 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.20
+* Sat Jul 13 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.8
 - Rebuilt for kernel
 
-* Sat Jul 06 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.19
+* Sat Jul 06 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.7
 - Rebuilt for kernel
 
-* Sun Jun 30 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.18
+* Sun Jun 30 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.6
 - Rebuilt for kernel
 
-* Mon Jun 17 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.17
+* Sat Jun 29 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.5
 - Rebuilt for kernel
 
-* Wed Jun 12 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.16
+* Fri Jun 14 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.4
+- Rebuilt for current f19 kernel
+
+* Wed Jun 12 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.3
+- Rebuilt for current f19 kernel
+
+* Wed Jun 12 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.2
 - Rebuilt for kernel
 
-* Sat May 25 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.15
+* Tue May 14 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.1
 - Rebuilt for kernel
 
-* Wed May 22 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.14
-- Rebuilt for kernel
-
-* Tue May 14 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.13
-- Rebuilt for kernel
-
-* Fri May 03 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.12
-- Rebuilt for kernel
-
-* Wed May 01 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.11
-- Rebuilt for kernel
-
-* Sun Apr 28 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.10
-Rebuilt for kernel
-
-* Thu Apr 25 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.9
-- Rebuilt for kernel
-
-* Thu Apr 18 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.8
-- Rebuilt for kernel
-
-* Sat Apr 13 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.7
-- Rebuilt for kernel
-
-* Wed Apr 10 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.6
-- Rebuilt for kernel
-
-* Tue Apr 02 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.5
-- Rebuilt for kernel
-
-* Fri Mar 22 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.4
-- Rebuilt for kernel
-
-* Mon Mar 18 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.3
-- Rebuilt for kernel
-
-* Fri Mar 15 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.2
-- Rebuilt for kernel
-
-* Mon Mar 11 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5.1
-- Rebuilt for kernel
-
-* Fri Mar 01 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-5
-- Modify 3.7 patch for 3.8 kernel
-
-* Thu Feb 28 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-4.5
-- Rebuilt for kernel
-
-* Tue Feb 26 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-4.4
-- Rebuilt for kernel
-
-* Thu Feb 21 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-4.3
-- Rebuilt for kernel
-
-* Sat Feb 16 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-4.2
-- Rebuilt for kernel
-
-* Sat Feb 16 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-4.1
-- Rebuilt for kernel
-
-* Fri Feb 15 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-4
-- Fix with a better patch from gentoo
-
-* Wed Feb 13 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-3.1
-- Rebuilt for kernel
-
-* Tue Feb 05 2013 Leigh Scott <leigh123linux@googlemail.com> - 173.14.36-3
-- patch for 3.7.6 kernel compile issue
-
-* Tue Feb 05 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-2.6
-- Rebuilt for kernel
-
-* Wed Jan 30 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-2.5
-- Rebuilt for updated kernel
-
-* Fri Jan 25 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-2.4
-- Rebuilt for updated kernel
-
-* Thu Jan 17 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-2.3
-- Rebuilt for updated kernel
-
-* Mon Jan 14 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-2.2
-- Rebuilt for updated kernel
-
-* Sun Jan 13 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-2.1
-- Rebuilt for updated kernel
-
-* Tue Jan 08 2013 Leigh Scott <leigh123linux@googlemail.com> - 173.14.36-2
-- patched and rebuilt for 3.7 kernel
-
-* Thu Jan 03 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-1.4
-- Rebuilt for f18 final kernel
-
-* Fri Dec 21 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-1.3
-- Rebuilt for current f18 kernel
-
-* Sun Nov 25 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-1.2
-- Rebuilt for current f18 kernel
-
-* Sun Nov 25 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.36-1.1
-- Rebuilt for Fedora 18 Beta kernel
+* Fri Apr 05 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1
+- Update to 173.14.37
 
 * Fri Nov 16 2012 Leigh Scott <leigh123linux@googlemail.com> - 173.14.36-1
 - Update to 173.14.36
 - Adds support for xserver ABI 13 (xorg-server 1.13)
+- Try to patch for 3.7 kernel
 
 * Thu Nov 08 2012 Nicolas Chauvet <kwizart@gmail.com> - 173.14.35-2.7
 - Rebuilt for updated kernel
