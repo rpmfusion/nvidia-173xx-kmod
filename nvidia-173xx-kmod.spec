@@ -3,12 +3,12 @@
 # "buildforkernels newest" macro for just that build; immediately after
 # queuing that build enable the macro again for subsequent builds; that way
 # a new akmod package will only get build when a new one is actually needed
-%global buildforkernels newest
+#global buildforkernels newest
 
 Name:          nvidia-173xx-kmod
 Version:       173.14.37
 # Taken over by kmodtool
-Release:       1%{?dist}.12
+Release:       2%{?dist}.4
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -18,6 +18,7 @@ URL:           http://www.nvidia.com/
 # http://us.download.nvidia.com/XFree86/Linux-x86_64/%{version}/NVIDIA-Linux-x86_64-%{version}-pkg0.run
 
 Source0:       nvidia-kmod-data-%{version}.tar.bz2
+Patch0:        fix-build-with-linux-3.10.patch
 
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -45,7 +46,7 @@ kmodtool  --target %{_target_cpu}  --repo rpmfusion --kmodname %{name} %{?buildf
 for arch in x86 x64
 do
     pushd nvidiapkg-${arch}
-echo "Nothing to patch"
+%patch0 -p1
     popd
 done
 
@@ -89,16 +90,22 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Fri Aug 16 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.12
+* Fri Aug 16 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-2.4
 - Rebuilt for kernel
 
-* Tue Aug 13 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.11
+* Tue Aug 13 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-2.3
 - Rebuilt for kernel
 
-* Sat Aug 03 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.10
+* Thu Aug 08 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-2.2
 - Rebuilt for kernel
 
-* Tue Jul 23 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.9
+* Tue Jul 30 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-2.1
+- Rebuilt for kernel
+
+* Fri Jul 26 2013 Leigh Scott <leigh123linux@googlemail.com> - 173.14.37-2
+- patch for 3.10 kernel
+
+* Fri Jul 26 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.9
 - Rebuilt for kernel
 
 * Sat Jul 13 2013 Nicolas Chauvet <kwizart@gmail.com> - 173.14.37-1.8
