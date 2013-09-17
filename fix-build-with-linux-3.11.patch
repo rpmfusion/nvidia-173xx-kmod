@@ -53,6 +53,20 @@ index 963e059..9aac81a 100644
  #endif
  
  #ifdef CONFIG_MTRR
+--- a/usr/src/nv/os-interface.c
++++ b/usr/src/nv/os-interface.c
+@@ -292,7 +292,11 @@ NvU64 NV_API_CALL os_get_page_mask(void)
+ 
+ NvU64 NV_API_CALL os_get_system_memory_size(void)
+ {
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)
++    return ((NvU64) get_num_physpages() * PAGE_SIZE) / RM_PAGE_SIZE;
++#else  
+     return ((NvU64) num_physpages * PAGE_SIZE) / RM_PAGE_SIZE;
++#endif
+ }
+ 
+ //
 diff --git a/usr/src/nv/nv.c b/usr/src/nv/nv.c
 index f82e46f..570c266 100644
 --- a/usr/src/nv/nv.c
