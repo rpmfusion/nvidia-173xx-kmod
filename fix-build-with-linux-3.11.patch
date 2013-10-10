@@ -43,12 +43,15 @@ index 143f9e4..aaee787 100644
  #else // (defined(CONFIG_I2C) || defined(CONFIG_I2C_MODULE))
 --- a/usr/src/nv/os-interface.c
 +++ b/usr/src/nv/os-interface.c
-@@ -292,7 +292,7 @@
+@@ -292,7 +292,11 @@
  
  NvU64 NV_API_CALL os_get_system_memory_size(void)
  {
--    return ((NvU64) num_physpages * PAGE_SIZE) / RM_PAGE_SIZE;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)
 +    return ((NvU64) get_num_physpages() * PAGE_SIZE) / RM_PAGE_SIZE;
++#else
+     return ((NvU64) num_physpages * PAGE_SIZE) / RM_PAGE_SIZE;
++#endif
  }
  
  //
