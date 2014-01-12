@@ -8,7 +8,7 @@
 Name:          nvidia-173xx-kmod
 Version:       173.14.39
 # Taken over by kmodtool
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -18,6 +18,8 @@ URL:           http://www.nvidia.com/
 # http://us.download.nvidia.com/XFree86/Linux-x86_64/%{version}/NVIDIA-Linux-x86_64-%{version}-pkg0.run
 
 Source0:       nvidia-kmod-data-%{version}.tar.bz2
+
+Patch0:        nvidia_3.13_kernel.patch
 
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -45,7 +47,7 @@ kmodtool  --target %{_target_cpu}  --repo rpmfusion --kmodname %{name} %{?buildf
 for arch in x86 x64
 do
     pushd nvidiapkg-${arch}
-echo "Nothing to patch"
+%patch0 -p1
     popd
 done
 
@@ -89,6 +91,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jan 12 2014 Leigh Scott <leigh123linux@googlemail.com> - 173.14.39-2
+- patch for 3.13 kernel
+
 * Thu Dec 19 2013 Leigh Scott <leigh123linux@googlemail.com> - 173.14.39-1
 - Update to 173.14.39
 
