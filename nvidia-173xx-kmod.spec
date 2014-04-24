@@ -18,7 +18,7 @@ URL:           http://www.nvidia.com/
 # http://us.download.nvidia.com/XFree86/Linux-x86_64/%{version}/NVIDIA-Linux-x86_64-%{version}-pkg0.run
 
 Source0:       nvidia-kmod-data-%{version}.tar.bz2
-Patch0:        nvidia_3.13_kernel.patch
+Patch0:        nvidia_3.14_kernel.patch
 
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
