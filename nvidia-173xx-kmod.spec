@@ -9,7 +9,7 @@ Name:          nvidia-173xx-kmod
 Version:       173.14.39
 # Taken over by kmodtool
 <<<<<<< nvidia-173xx-kmod.spec
-Release:       6%{?dist}.11
+Release:       6%{?dist}.12
 =======
 Release:       2%{?dist}
 >>>>>>> 1.85
@@ -94,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jul 18 2014 Nicolas Chauvet <kwizart@gmail.com>
+- Rebuilt for kernel
+
 * Thu Jul 17 2014 Nicolas Chauvet <kwizart@gmail.com>
 - Rebuilt for kernel
 
