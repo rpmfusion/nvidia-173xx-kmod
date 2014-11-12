@@ -1,0 +1,59 @@
+--- a/usr/src/nv/conftest.sh	2013-11-28 02:47:10.000000000 +0400
++++ b/usr/src/nv/conftest.sh	2014-10-23 15:42:09.474734343 +0400
+@@ -943,7 +943,7 @@ compile_test() {
+             # and how many arguments it takes.
+             #
+             echo "$CONFTEST_PREAMBLE
+-            #include <acpi/acpi.h>
++            #include <linux/acpi.h>
+             void conftest_acpi_walk_namespace(void) {
+                 acpi_walk_namespace();
+             }" > conftest$$.c
+@@ -958,7 +958,7 @@ compile_test() {
+             fi
+ 
+             echo "$CONFTEST_PREAMBLE
+-            #include <acpi/acpi.h>
++            #include <linux/acpi.h>
+             void conftest_acpi_walk_namespace(void) {
+                 acpi_walk_namespace(0, NULL, 0, NULL, NULL, NULL, NULL);
+             }" > conftest$$.c
+@@ -974,7 +974,7 @@ compile_test() {
+             fi
+ 
+             echo "$CONFTEST_PREAMBLE
+-            #include <acpi/acpi.h>
++            #include <linux/acpi.h>
+             void conftest_acpi_walk_namespace(void) {
+                 acpi_walk_namespace(0, NULL, 0, NULL, NULL, NULL);
+             }" > conftest$$.c
+--- a/usr/src/nv/nvacpi.c
++++ b/usr/src/nv/nvacpi.c
+@@ -259,7 +259,10 @@ static int nv_acpi_remove(struct acpi_de
+ 
+     if (pNvAcpiObject->notify_handler_installed)
+     {
++#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 13, 0)
++ /* beginning with 3.13, acpi_remove_notify_handler() waits for events to finish */
+         NV_ACPI_OS_WAIT_EVENTS_COMPLETE();
++#endif
+ 
+         // remove event notifier
+         status = acpi_remove_notify_handler(device->handle, ACPI_DEVICE_NOTIFY, nv_acpi_event);
+--- a/usr/src/nv/nv-linux.h
++++ b/usr/src/nv/nv-linux.h
+@@ -206,8 +206,14 @@ extern int nv_pat_mode;
+ #endif
+ 
+ #if defined(CONFIG_ACPI) 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 17, 0)
+ #include <acpi/acpi.h>
+ #include <acpi/acpi_drivers.h>
++#endif
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 14, 0)
++#include <linux/acpi.h>
++#include <acpi/acpi_bus.h>
++#endif
+ #if defined(NV_ACPI_DEVICE_OPS_HAS_MATCH) || defined(ACPI_VIDEO_HID)
+ #define NV_LINUX_ACPI_EVENTS_SUPPORTED 1
+ #endif
