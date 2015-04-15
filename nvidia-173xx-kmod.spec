@@ -3,12 +3,12 @@
 # "buildforkernels newest" macro for just that build; immediately after
 # queuing that build enable the macro again for subsequent builds; that way
 # a new akmod package will only get build when a new one is actually needed
-%global buildforkernels current
+%global buildforkernels newest
 
 Name:          nvidia-173xx-kmod
 Version:       173.14.39
 # Taken over by kmodtool
-Release:       5%{?dist}
+Release:       5%{?dist}.1
 Summary:       NVIDIA 173xx display driver kernel module
 Group:         System Environment/Kernel
 License:       Redistributable, no modification permitted
@@ -92,6 +92,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Apr 15 2015 Nicolas Chauvet <kwizart@gmail.com> - 173.14.39-5.1
+- Rebuilt for kernel
+
 * Tue Mar 31 2015 Leigh Scott <leigh123linux@googlemail.com> - 173.14.39-5
 - patch for 3.19 kernel
 
